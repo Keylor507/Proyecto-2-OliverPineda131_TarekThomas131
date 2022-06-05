@@ -5,7 +5,7 @@
 # Python program for implementation
 # of Bisection Method for
 # solving equations
-
+MAX_ITER= 20
 # An example function whose
 # solution is determined using
 # Bisection Method.
@@ -22,6 +22,7 @@ def bisection(a,b):
         return
   
     c = a
+    #for i in range (MAX_ITER):
     while ((b-a) >= 0.01):
  
         # Find middle point
