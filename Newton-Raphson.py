@@ -6,20 +6,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sympy as sp
 
-# An example function whose solution
-# is determined using Bisection Method.
-# The function is x^3 - x^2 + 2
+#Función que resuelve la ecuación usando el valor brindado para x 
 def func(eq,x):
     resp = eval(eq, {"x": x})
     return resp
 
-# Derivative of the above function
-# which is 3*x^x - 2*x
+#Función que resuelve la derivada usando el valor brindado para x 
 def derivFunc(derivada,x):
     resp = eval(derivada, {"x": x})
     return resp
 
-# Function to find the root
+#Función para obtener la raíz con el método númerico elegido
 def newtonRaphson( x ):
     h = func(eq,x) / derivFunc(derivada,x)
     print(h)
@@ -29,10 +26,15 @@ def newtonRaphson( x ):
         # x(i+1) = x(i) - f(x) / f'(x)
         x = x - h
      
-    print("The value of the root is : ",
+    print("El valor de la raíz es: : ",
                              "%.4f"% x)
 
+#Programa principal
+#Se ingresa la ecuación a utilizar y se muestra al usuario
 potencia = int(input("Ingresa el mayor exponente en la ecuación: "))
+while potencia <= 0:
+    print("La cantidad debe ser positiva")
+    potencia = int(input("Ingresa el mayor exponente en la ecuación: "))
 eq = ""
 for i in reversed(range (potencia + 1)):
     num = float(input("Ingresa el coeficiente de x^" + str(i) + ": "))
@@ -40,9 +42,13 @@ for i in reversed(range (potencia + 1)):
         eq = eq + "(" + str(num) + "*x**" + str(i) + ")"
     else:
         eq = eq + "(" + str(num) + "*x**" + str(i) + ") + "
+print("La ecuación a utilizar es: " + eq)
+print("Observe la gráfica y elija 1 punto cercano a la unión de la gráfica con el eje x")
 
+#Se calcula la derivada de la ecuación
 derivada=str(sp.diff(eq))
 
+#Se diseña la gráfica para la ecuación ingresada
 xlist = np.linspace(-10, 10,num=1000)
 ylist = func(eq, xlist)
 plt.figure(dpi=120)
@@ -55,7 +61,8 @@ ax.spines['right'].set_color('none')
 plt.ylim(-10,10)
 plt.show()
 
-# Driver program to test above
+#Se solicita el punto inicial para hacer los cálculos
 x = float(input("Ingresa un punto cercano a la unión de la gráfica con el eje x: "))
 
+#Se ejecuta el método
 newtonRaphson(x)
