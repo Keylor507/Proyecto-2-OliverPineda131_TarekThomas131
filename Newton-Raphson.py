@@ -19,7 +19,6 @@ def derivFunc(derivada,x):
 #Función para obtener la raíz con el método númerico elegido
 def newtonRaphson( x ):
     h = func(eq,x) / derivFunc(derivada,x)
-    print(h)
     while abs(h) >= 0.0001:
         h = func(eq,x)/derivFunc(derivada,x)
          
