@@ -6,6 +6,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sympy as sp
 
+MAX_ITER = 20
+
 #Función que resuelve la ecuación usando el valor brindado para x 
 def func(eq,x):
     resp = eval(eq, {"x": x})
@@ -18,12 +20,28 @@ def derivFunc(derivada,x):
 
 #Función para obtener la raíz con el método númerico elegido
 def newtonRaphson( x ):
-    h = func(eq,x) / derivFunc(derivada,x)
-    while abs(h) >= 0.0001:
+    i = 0
+    while True:
         h = func(eq,x)/derivFunc(derivada,x)
          
         # x(i+1) = x(i) - f(x) / f'(x)
         x = x - h
+
+        # Se imprime el resultado de cada iteración acorde a si se puede calcular error relativo o no
+        if i >= 1:
+            error = abs((x-xAnt)/x)*100
+            print("Iteración {:d}: Raíz = {:.4f}; Error = {:.4f}%".format(i, x, error))
+            if error < 1 or i == MAX_ITER:  #Se establecen las condiciones para detener la ejecución
+                break
+        else:
+            print("Iteración {:d}: Raíz = {:.4f}".format(i, x))
+        
+        # Se imprime un mensaje en caso de llegar a la máxima iteración permitida
+        if i == MAX_ITER:
+            print("Se alcanzó la máxima cantidad de iteraciones permitidas ({:d})".format(MAX_ITER))
+
+        xAnt = x
+        i = i + 1
      
     print("El valor de la raíz es: : ",
                              "%.4f"% x)

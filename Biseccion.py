@@ -5,6 +5,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+MAX_ITER = 20
+
 #Función que resuelve la ecuación usando el valor brindado para x 
 def func(eq,x):
     resp = eval(eq, {"x": x})
@@ -18,8 +20,9 @@ def bisection(a,b):
         return
   
     c = a
-    #for i in range (MAX_ITER):
-    while ((b-a) >= 0.01):
+    i = 0
+    
+    while True:
  
         # Se encuentra el punto medio
         c = (a+b)/2
@@ -28,12 +31,30 @@ def bisection(a,b):
         if (func(eq, c) == 0.0):
             break
   
+        # Se imprime el resultado de cada iteración acorde a si se puede calcular error relativo o no
+        if i >= 1:
+            error = abs((c-cAnt)/c)*100
+            print("Iteración {:d}: Raíz = {:.4f}; Error = {:.4f}%".format(i, c, error))
+            if error < 1 or i == MAX_ITER:  #Se establecen las condiciones para detener la ejecución
+                break
+        else:
+            print("Iteración {:d}: Raíz = {:.4f}".format(i, c))
+        
+        # Se imprime un mensaje en caso de llegar a la máxima iteración permitida
+        if i == MAX_ITER:
+            print("Se alcanzó la máxima cantidad de iteraciones permitidas ({:d})".format(MAX_ITER))
+
         # Se decide qué lado se reemplaza en la siguiente iteración
         if (func(eq, c)*func(eq, a) < 0):
             b = c
+            cAnt = c
         else:
             a = c
+            cAnt = c
+        
+        i = i + 1
              
+    # Se imprime la respuesta final
     print("El valor de la raíz es: ","%.4f"%c)
 
 #Programa principal
